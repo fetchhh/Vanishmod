@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 import redstonedubstep.mods.vanishmod.api.PlayerVanishEvent;
+import redstonedubstep.mods.vanishmod.compat.JoinLeaveMessagesCompat;
 import redstonedubstep.mods.vanishmod.compat.Mc2DiscordCompat;
 import redstonedubstep.mods.vanishmod.misc.SoundSuppressionHelper;
 
@@ -78,6 +79,13 @@ public class VanishingHandler {
 	public static void sendJoinOrLeaveMessageToPlayers(List<ServerPlayer> playerList, ServerPlayer sender, boolean leaveMessage, boolean beforeStatusChange) {
 		if (VanishConfig.CONFIG.sendFakeJoinLeaveMessages.get() && leaveMessage != beforeStatusChange && sender.server.getPlayerList().getPlayers().contains(sender)) { //Only send fake messages if the player has actually fully joined the server before this method is invoked
 			Component message = Component.translatable(leaveMessage ? "multiplayer.player.left" : "multiplayer.player.joined", sender.getDisplayName()).withStyle(ChatFormatting.YELLOW);
+
+			if (Vanishmod.joinleavemessagesDetected) {
+				Component customMessage = JoinLeaveMessagesCompat.getFakeJoinLeaveMessage(sender, leaveMessage);
+				if (customMessage != null) {
+					message = customMessage;
+				}
+			}
 
 			for (ServerPlayer receiver : playerList) {
 				receiver.sendSystemMessage(message);

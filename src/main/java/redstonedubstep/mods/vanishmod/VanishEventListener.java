@@ -34,6 +34,8 @@ public class VanishEventListener {
 	public static void onServerStarted(ServerStartedEvent event) {
 		if (ModList.get().isLoaded("mc2discord"))
 			Vanishmod.mc2discordDetected = true;
+		if (ModList.get().isLoaded("joinleavemessages"))
+			Vanishmod.joinleavemessagesDetected = true;
 	}
 
 	@SubscribeEvent

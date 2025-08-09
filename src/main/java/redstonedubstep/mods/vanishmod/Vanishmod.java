@@ -12,6 +12,7 @@ import net.minecraftforge.network.NetworkConstants;
 public class Vanishmod {
 	public static final String MODID = "vmod"; //This is Vanishmod v1.1.18 for 1.20.1!
 	public static boolean mc2discordDetected = false;
+	public static boolean joinleavemessagesDetected = false;
 
 	public Vanishmod() {
 		ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
